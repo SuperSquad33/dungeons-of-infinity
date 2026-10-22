@@ -15,9 +15,9 @@ if(ds_list_size(global.Arcade_UsedPlayers) == 0){
 
 
 if(global.Level.Index == DungeonLevel.Sewers){
-	Player = asset_get_index("sArcadePlayerTMNT");
+	aPlayer = asset_get_index("sArcadePlayerTMNT");
 }else{
-	Player = asset_get_index("sArcadePlayer" + string(global.Arcade_UsedPlayers[| 0]));
+	aPlayer = asset_get_index("sArcadePlayer" + string(global.Arcade_UsedPlayers[| 0]));
 	ds_list_delete(global.Arcade_UsedPlayers, 0);
 }
 

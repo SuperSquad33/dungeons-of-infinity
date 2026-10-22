@@ -66,7 +66,7 @@ switch(State){
 			LampDim = FloorLevel;
 			UpdateCarryItem();
 			Dungeon_DestroyUnimportantObjs();
-			oCamera.SetToRoomIndex(Warp_RoomIndex_To, true, true, x - 128, y - 128)
+		 	oCamera.SetToRoomIndex(Warp_RoomIndex_To, true, true, x - 128, y - 128)
 			global.Level.Rooms[Warp_RoomIndex_To].Visited = true;
 			Enemy_Reset(Warp_RoomIndex_To);
 			Lighting_UpdateLinkLight([x, y - 6]);

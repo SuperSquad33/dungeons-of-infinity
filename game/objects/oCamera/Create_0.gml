@@ -34,8 +34,8 @@ function SetToRoomIndex(_RoomIndex, _ActivateRoom = false, EnemyReset = true){
 	
 	//optional: args 3 & 4 can set the camera at that location
 	if(argument_count == 5){
-		X = argument[1];	
-		Y = argument[2];
+		X = argument[3];	
+		Y = argument[4];
 	}
 	
 	if(EnemyReset) Enemy_Reset(_RoomIndex);

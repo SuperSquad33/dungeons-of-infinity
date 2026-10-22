@@ -159,7 +159,7 @@ function User_SaveDataStruct() constructor{
 	Inventory = 0;
 	
 	ChallengeOptions = 0;
-	Challenges = 0;
+	active_Challenges = 0;
 	
 	Cursed = false;
 	CurseEffect = 0;
