@@ -36,6 +36,13 @@ function User_Create() constructor {
 	
 	Stats = array_create(global.StatCount);
 
+	Cheats = {
+		Inf_Health: false,
+		Inf_Magic: false,
+		Inf_Rupees: false,
+		Inf_Keys: false,
+	};
+
 	SaveData = -1;
 
 	DungeonSeq = array_create(DungeonClasses - 1);
@@ -141,6 +148,10 @@ function User_VerifyIntegrity(){
 	
 	if(!variable_struct_exists(User, "UsedFortuneTellerReadings")) variable_struct_set(User, "UsedFortuneTellerReadings", []);
 	if(!variable_struct_exists(User, "UsedCatacombGraveHeadings")) variable_struct_set(User, "UsedCatacombGraveHeadings", []);
+	
+	
+	// Cheats initialization
+	Init_Cheats_Struct();
 	
 	User_Save();
 	

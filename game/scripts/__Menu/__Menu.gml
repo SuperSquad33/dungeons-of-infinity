@@ -47,7 +47,7 @@ enum MenuSelection_Options{
 	Back,
 	Controls,
 	User,
-	Cheats,
+	Cheats
 }
 
 enum MenuSelection_Cheats{
