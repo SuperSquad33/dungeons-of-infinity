@@ -41,7 +41,7 @@ var _Input_MenuLeft = input_check_pressed("menu_left");
 var _Input_MenuRight = input_check_pressed("menu_right");
 var _Input_MenuInput =  input_check_pressed("menu_input");
 var _Input_MenuBack = input_check_pressed("menu_back");
-
+var _Input_MoveX = _Input_MenuRight -_Input_MenuLeft;
 var _Back = false;
 
 switch(Menu_ActiveIndex){
@@ -448,6 +448,10 @@ if(_Input_MenuInput){
 				case MenuSelection_Options.Cheats:
 					Win_Options_Activate(MenuIndex.Cheats);
 					break;
+					
+				case MenuSelection_Options.Sound:
+					Win_Options_Activate(MenuIndex.Sound);
+					break;
 				
 			}
 			
@@ -497,6 +501,29 @@ if(_Input_MenuInput){
 				case MenuSelection_Cheats.InfArrows:
 					_Cheats.Inf_Arrows = !_Cheats.Inf_Arrows;
 					break;
+			
+			
+			}
+			
+			break;
+		
+		case MenuIndex.Sound:
+			var Sound = global.Users[global.UserIndex].Sound;
+			var Amount = sign(_Input_MoveX);
+			switch(Selector_Index_Options){
+				case MenuSelection_Sound.Back:
+					_Back = true;
+					break;
+				case MenuSelection_Sound.Save:
+					User_Save();
+					_Back = true;
+					break;
+				case MenuSelection_Sound.Music:
+					Sound += Amount;//_Back = true;	
+					break;
+				case MenuSelection_Sound.SFX:
+					Sound += Amount;//_Back = true;
+					break;			
 			}
 			
 			break;

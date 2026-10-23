@@ -1,5 +1,7 @@
 if(instance_exists(ErrorMsgInst)) exit;
 
+var User = global.Users[global.UserIndex]; //Save file slot
+
 draw_set_halign(fa_left);
 
 var _y = 0;
@@ -215,6 +217,7 @@ if(MenuWinInst_Options.visible){
 	
 	
 	//extra drawing stuff. If menu has to be drawn, plus other things need to be drawn too
+	
 	switch(MenuWin_Options_MenuIndex){
 	
 		case MenuIndex.Gear:
@@ -353,7 +356,7 @@ if(MenuWinInst_Options.visible){
 			PosY+=16;
 			
 			var InfHealthEnabledStr, InfMagicEnabledStr, InfRupeesEnabledStr, InfKeysEnabledStr, InfArrowsEnabledStr = "OFF";
-			var User = global.Users[global.UserIndex];
+			
 			try {
 				InfHealthEnabledStr = User.Cheats.Inf_Health == false ? "OFF" : "ON";
 				InfMagicEnabledStr = User.Cheats.Inf_Magic == false ? "OFF" : "ON";
@@ -372,6 +375,30 @@ if(MenuWinInst_Options.visible){
 			draw_text(PosX, PosY, InfArrowsEnabledStr); PosY+=16;
 			
 			
+			break;
+			
+		case MenuIndex.Sound:
+			draw_set_halign(fa_right);
+			PosX = MenuWinInst_Options.x + 140;
+			PosY = MenuWinInst_Options.y + 17;
+			
+			PosY+=16;
+			PosY+=16;
+			
+			var musicVolume = 1, sfxVolume = 1;
+			
+			try {
+				musicVolume = User.Sound.Music;
+				sfxVolume = User.Sound.SFX;
+				
+			} catch (_exception) {
+				// Cheat settings were not defined: Re-initialize all of them
+				Init_Sound_Struct(User);
+			}
+			
+			draw_text(PosX, PosY, string(musicVolume*100)+"%"); PosY+=16;
+			draw_text(PosX, PosY, string(sfxVolume*100)+"%"); PosY+=16;		
+		
 			break;
 		
 		case MenuIndex.Controls_Keyboard:

@@ -9,6 +9,7 @@ enum MenuIndex{
 	UserDelete,
 	Stats,
 	Cheats,
+	Sound,
 	Character,
 	Gear,
 	Challenges,
@@ -47,7 +48,8 @@ enum MenuSelection_Options{
 	Back,
 	Controls,
 	User,
-	Cheats
+	Cheats,
+	Sound
 }
 
 enum MenuSelection_Cheats{
@@ -59,6 +61,13 @@ enum MenuSelection_Cheats{
 	InfKeys,
 	InfArrows,
 	Max
+}
+
+enum MenuSelection_Sound{
+	Back,
+	Save,
+	Music,
+	SFX
 }
 
 enum MenuSelection_Options_Controls{

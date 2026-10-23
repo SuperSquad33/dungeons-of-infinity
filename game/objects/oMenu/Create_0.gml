@@ -173,14 +173,13 @@ Menu_Create(MenuIndex.Challenges, "Enable Challenges", 18,,10,	"BACK",
 																"NO FOOD ITEMS",
 																"WALL MASTER");
 																
-Menu_Create(MenuIndex.Options, "Options",,,, "Back", "{s}Controls", "{s}User");
+Menu_Create(MenuIndex.Options, "Options",,,, "Back", "{s}Controls", "{s}User", "{s}Cheats", "{s}Sound");
 Menu_Create(MenuIndex.Controls, "Controls", 30,,, "Back", "{s}Gamepad", "{s}Keyboard");
 Menu_Create(MenuIndex.Controls_Gamepad, "Remap Gamepad", 25,,, "Back", "Remap", "Default");
 Menu_Create(MenuIndex.Controls_Keyboard, "Remap Keyboard", 25,,, "Back", "Remap", "Default");
 Menu_Create(MenuIndex.User, "User",,,, "Back", "{s}Rename", "{s}Delete");
 Menu_Create(MenuIndex.UserDelete, "Delete?", 10,,, "No", "Yes");
 Menu_Create(MenuIndex.Stats, "Stats", 22, false,, "");
-Menu_Create(MenuIndex.Cheats, "Cheats", 25,,, "Back", "Save", "Inf. HP", "Inf. Magic", "Inf. Rupees", "Inf. Keys");
 
 Menu_Create(MenuIndex.Cheats, "Cheats", 25,,, "Back", "Save",
 	"Inf. HP",
@@ -189,13 +188,9 @@ Menu_Create(MenuIndex.Cheats, "Cheats", 25,,, "Back", "Save",
 	"Inf. Keys",
 	"Inf. Arrows");
 
-Menu_Create(MenuIndex.Cheats, "Cheats", 25,,, "Back", "Save",
-	"Inf. HP",
-	"Inf. Magic",
-	"Inf. Rupees",
-	"Inf. Keys",
-	"Inf. Arrows");
-
+Menu_Create(MenuIndex.Sound, "Sound", 20,,, "Back","Save",
+	"Music",
+	"SFX");
 
 Win_Main_Activate(MenuWin_Main_MenuIndex);
 

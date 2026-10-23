@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"Init_Sound_Struct",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Init_Sound_Struct",
+  "parent":{
+    "name":"Link",
+    "path":"folders/Objects/Characters/Link.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

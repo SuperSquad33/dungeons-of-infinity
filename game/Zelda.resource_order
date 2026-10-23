@@ -886,6 +886,7 @@
     {"name":"Gibdo","order":9,"path":"scripts/Gibdo/Gibdo.yy",},
     {"name":"Goriya","order":9,"path":"scripts/Goriya/Goriya.yy",},
     {"name":"Init_Gameplay_Cheats","order":10,"path":"scripts/Init_Gameplay_Cheats/Init_Gameplay_Cheats.yy",},
+    {"name":"Init_Sound_Struct","order":11,"path":"scripts/Init_Sound_Struct/Init_Sound_Struct.yy",},
     {"name":"input_accessibility_global_cooldown_set","order":1,"path":"scripts/input_accessibility_global_cooldown_set/input_accessibility_global_cooldown_set.yy",},
     {"name":"input_accessibility_global_toggle_get","order":2,"path":"scripts/input_accessibility_global_toggle_get/input_accessibility_global_toggle_get.yy",},
     {"name":"input_accessibility_global_toggle_set","order":3,"path":"scripts/input_accessibility_global_toggle_set/input_accessibility_global_toggle_set.yy",},

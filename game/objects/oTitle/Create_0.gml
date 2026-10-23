@@ -13,7 +13,7 @@ layer_set_fx("Effect_Contrast", FX_Contrast);
 
 ShowBG = false;
 
-AllowStart = false;
+AllowStart = true;
 
 var _StartFrame = 45;
 var _IntroMusicFrame = _StartFrame + 150;
