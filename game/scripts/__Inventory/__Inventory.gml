@@ -897,7 +897,7 @@ function Inventory_UseItem(_Slot, _FromInventory){
 						break;
 				}
 				
-				if(_Error) global.Inventory.ItemData[ItemClass.Magic].Amount += _MagicUsed;
+				if(_Error) global.Inventory.ItemData[ItemClass.Magic].Amount = min(global.Inventory.ItemData[ItemClass.Magic].Amount + _MagicUsed, MAGICAMOUNT_MAX);
 				
 			}
 			
@@ -956,7 +956,8 @@ function Inventory_UseItem(_Slot, _FromInventory){
 				
 			}
 
-			Inventory_Add(_ItemClass, _ItemIndex, -1, _Slot);
+			// Inf. Bombs cheat
+			if(!(_ItemClass == ItemClass.Bombs && Cheat_On("Cheat_Inf_Bombs"))) Inventory_Add(_ItemClass, _ItemIndex, -1, _Slot);
 
 			if(oLink.State == LinkState.PickUp) break;
 			
@@ -1244,10 +1245,21 @@ function Inventory_ClearAll(){
 	global.ItemData[ItemClass.Bombs].Type = ItemType.Inv_Stk;
 	
 	for(var _BagIndex = 0; _BagIndex < Inventory_Bags; _BagIndex++){
-		for(var i = 0; i < global.Inventory.Bags[_BagIndex].SlotCount; i++){
+		var _Bag = global.Inventory.Bags[_BagIndex];
+		for(var i = 0; i < _Bag.SlotCount; i++){
 			Inventory_DeleteSlot([_BagIndex, i]);
 		}
-		global.Inventory.Bags[_BagIndex].Owns = false;
+		_Bag.Owns = false;
+		_Bag.Status = InventoryBagStatus.Closed;
+		_Bag.Position = 0;
+	}
+
+	// Deleting slots only resets items that are in a slot. Some items are owned without one
+	// (e.g. the Moon Pearl or Master Key given by a cheat when the inventory was full), so reset every item's data too.
+	// Hearts are kept; Aghanim calls this mid-fight, and a new game sets them in Link_SetStartingItems.
+	for(var _ItemClass = 0; _ItemClass < ItemClasses; _ItemClass++){
+		if(_ItemClass == ItemClass.Heart || _ItemClass == ItemClass.HeartPiece) continue;
+		Inventory_ResetItemData(global.Inventory.ItemData[_ItemClass]);
 	}
 
 	global.Inventory.Bags[InventoryBag.Main].Owns = true;	
@@ -1262,6 +1274,34 @@ function Inventory_ClearAll(){
 	global.Inventory.SlotSelected = [InventoryBag.Main, global.Inventory.Bags[InventoryBag.Main].Columns];
 	global.Inventory.SlotEquiped = [-1, -1];
 	
+}
+
+/// @description Resets an item's inventory data to "not owned": Owns to false, Amount to 0, and upgrade Index to its minimum.
+/// @param {Struct} _InvItemData An entry of global.Inventory.ItemData.
+function Inventory_ResetItemData(_InvItemData){
+
+	if(!is_struct(_InvItemData)) exit;
+
+	if(variable_struct_exists(_InvItemData, "Owns")){
+		if(is_array(_InvItemData.Owns)){
+			for(var i = 0; i < array_length(_InvItemData.Owns); i++) _InvItemData.Owns[i] = false;
+		}else{
+			_InvItemData.Owns = false;
+		}
+	}
+
+	if(variable_struct_exists(_InvItemData, "Amount")){
+		if(is_array(_InvItemData.Amount)){
+			for(var i = 0; i < array_length(_InvItemData.Amount); i++) _InvItemData.Amount[i] = 0;
+		}else{
+			_InvItemData.Amount = 0;
+		}
+	}
+
+	if(variable_struct_exists(_InvItemData, "Index")){
+		_InvItemData.Index = _InvItemData[$ "Index_Min"] ?? -1;
+	}
+
 }
 
 function Inventory_FindLockedSlot(){

@@ -36,12 +36,8 @@ function User_Create() constructor {
 	
 	Stats = array_create(global.StatCount);
 
-	Cheats = {
-		Inf_Health: false,
-		Inf_Magic: false,
-		Inf_Rupees: false,
-		Inf_Keys: false,
-	};
+	Cheats = {};
+	Init_Cheats_Struct(self);
 
 	SaveData = -1;
 
@@ -282,6 +278,10 @@ function User_LoadGame(){
 	
 	Link_UpdateAttackDefence();
 	
+	// Apply cheats, if applicable, regardless if we're starting a new game or not
+	Init_Gameplay_Cheats();
+	Inventory_Update();
+	
 }
 
 function User_DelSaveData(){
@@ -397,11 +397,30 @@ function User_Delete(){
 	User_Save();
 }
 
+// Volume sliders replaced the old Music/SFX on/off prefs (Pref.SFX / Pref.Music); a volume of 0 is muted
 function User_UpdateMusicSFX(){
 	
-	var _Music = global.Users[global.UserIndex].Prefs[Pref.Music];
-	var _SFX = global.Users[global.UserIndex].Prefs[Pref.SFX];
-	audio_group_set_gain(audiogroup_Music, _Music ? global.MusicVol : 0, 0);
-	audio_group_set_gain(audiogroup_SFX, _SFX ? global.SFXVol : 0, 0);
+	audio_group_set_gain(audiogroup_Music, global.MusicVol, 0);
+	audio_group_set_gain(audiogroup_SFX, global.SFXVol, 0);
 
+}
+
+//writes the settings to options.ini (saved in the appdata folder, not next to the exe)
+function Settings_SaveIni(){
+	try{
+		ini_open("options.ini");
+		ini_write_real("Screen", "Fullscreen", global.Fullscreen ? 1 : 0);
+		ini_write_real("Audio", "MusicVol", round(global.MusicVol * 100) / 100);
+		ini_write_real("Audio", "SFXVol", round(global.SFXVol * 100) / 100);
+		ini_write_real("Preferences", "Gore", global.Gore ? 1 : 0);
+		ini_write_real("Preferences", "Lighting", global.GlobalLighting ? 1 : 0);
+		ini_write_real("Preferences", "AltTabPause", global.AltTabPause ? 1 : 0);
+		ini_write_real("Preferences", "StairPause", global.StairPause ? 1 : 0);
+		ini_write_real("Preferences", "SaveVersionCheck", global.SaveVersionCheck ? 1 : 0);
+		ini_write_real("Preferences", "CanSkipTitle", global.CanSkipTitle ? 1 : 0);
+		ini_write_real("Controls", "AnalogueThreshold", round(global.Gamepad_AnalogueThreshold * 100) / 100);
+		ini_close();
+	}catch(_e){
+		show_debug_message("Settings_SaveIni failed: " + string(_e.message));
+	}
 }
