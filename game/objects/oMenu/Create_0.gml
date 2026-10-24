@@ -210,19 +210,43 @@ Menu_Create(MenuIndex.Options, "Options", [
 // Cheats are toggles on the current user, listed from global.CheatList. Ungrouped cheats go on the Cheats page,
 // followed by a link to each group's own sub-page, in the order the groups first appear in the list.
 // Save writes them to the user file; Back puts them back the way they were.
-var _CheatPage = array_concat([Menu_BackItem(), Menu_SaveItem()], Menu_CheatRows());
+var _SaveCheats = function(){
+	User_Save();
+	global.CheatsEnabled = Cheats_Enabled(false);
+};
+var _CheatPage = array_concat([Menu_BackItem(), Menu_CheatSaveItem()], Menu_CheatRows());
 var _CheatGroups = Menu_CheatGroups();
 for(var i = 0; i < array_length(_CheatGroups); i++){
 	var _Group = _CheatGroups[i];
 	var _GroupPage = Menu_NewPageIndex();
-	Menu_Create(_GroupPage, _Group, array_concat([Menu_BackItem(), Menu_SaveItem()], Menu_CheatRows(_Group)), {
-		TileW: 32, VisibleRows: MENU_VISIBLE_ROWS, OnSave: User_Save,
+	Menu_Create(_GroupPage, _Group, array_concat([Menu_BackItem(), Menu_CheatSaveItem()], Menu_CheatRows(_Group)), {
+		TileW: 32, VisibleRows: MENU_VISIBLE_ROWS, OnSave: _SaveCheats,
 		OnBack: function(_Sound){ Win_Options_Swap(MenuIndex.Cheats, _Sound); }
 	});
 	array_push(_CheatPage, Menu_LinkSwap((i == 0 ? "{s}" : "") + _Group, _GroupPage));
 }
 Menu_Create(MenuIndex.Cheats, "Cheats", _CheatPage, {
-	TileW: 25, VisibleRows: MENU_VISIBLE_ROWS, Parent: MenuIndex.Options, OnSave: User_Save
+	TileW: 25, VisibleRows: MENU_VISIBLE_ROWS, Parent: MenuIndex.Options, OnSave: _SaveCheats
+});
+
+// "Enable Cheats?" confirmation, shown in place of the cheat page being saved.
+CheatWarning_ReturnPage = MenuIndex.Cheats;
+Menu_OpenCheatWarning = function(){
+	CheatWarning_ReturnPage = Menu_ActiveIndex;
+	Win_Options_Swap(MenuIndex.CheatWarning, Sound_Boss_Hit);
+};
+Menu_CloseCheatWarning = function(_Confirm){
+	var _Page = CheatWarning_ReturnPage;
+	Menu_ActiveIndex = _Page;
+	MenuWin_Options_MenuIndex = _Page;
+	Selector_Index_Options = 1;	// back on the Save row
+	Menu_HoldFrames = 0;
+	if(_Confirm) Menu_Save();
+	else audio_play_sound(Sound_Throw, 1, false);
+};
+Menu_Create(MenuIndex.CheatWarning, "Enable Cheats?", Menu_CheatWarningRows(), {
+	Top: 140, Message: CHEAT_WARNING_MSG,
+	OnBack: function(){ Menu_CloseCheatWarning(false); }
 });
 
 // Settings apply live so they can be previewed; Save writes them to options.ini, Back puts them back

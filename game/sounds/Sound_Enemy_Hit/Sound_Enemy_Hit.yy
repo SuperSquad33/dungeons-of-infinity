@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":0.2075,
+  "duration":0.20752834,
   "exportDir":"",
   "name":"Sound_Enemy_Hit",
   "parent":{

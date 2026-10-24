@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":0.406576,
+  "duration":0.40657598,
   "exportDir":"",
   "name":"Sound_Arrow_Hit",
   "parent":{

@@ -16,6 +16,7 @@ enum MenuIndex{
 	Controls_Gamepad,
 	Controls_Keyboard,
 	Settings,
+	CheatWarning,
 
 	FirstGenerated	// Pages built from data at runtime, from Menu_NewPageIndex
 }
@@ -25,8 +26,11 @@ enum GameMenuPage{
 	Main,
 	Options,
 	Cheats,
+	CheatWarning,
 	Quit
 }
+
+#macro CHEAT_WARNING_MSG "Cheats make some feats impossible.\n\nThe run stays marked as cheated, even if they are turned off again."
 
 
 global.NewUserChrMap = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9","-",".",",","!","@","#","$"," "," "," "," "," "," "," "," "," "];
@@ -447,8 +451,6 @@ function Menu_Save(){
 		if(Menu_Snapshot[i] != undefined) Menu_TakeSnapshot(i);
 	}
 	Menu_Leave(Sound_ItemGet);
-	
-	global.CheatsEnabled = Cheats_Enabled(true);
 }
 
 // Goes to the active page's Parent, or runs its OnBack
@@ -518,6 +520,8 @@ function Menu_SelectUser(_Row){
 			_Sound = Sound_Error;
 			break;
 	}
+	// On the title screen, cheats count as on when this user has any saved
+	global.CheatsEnabled = Cheats_Enabled(false);
 	Win_Main_Activate(Menu_UserHome(),, _Sound);
 	Menu_Title[MenuIndex.ContinueGame] = global.Users[global.UserIndex].Name;
 	Menu_Title[MenuIndex.NewGame] = global.Users[global.UserIndex].Name;
@@ -686,6 +690,32 @@ function Menu_SetCheat(_Value, _Row){
 	global.Users[global.UserIndex].Cheats[$ _Row.Key] = _Value;
 }
 
+// Save row for cheat pages. If saving would turn cheats on while they're off, the "Enable Cheats?" page asks first.
+// Each menu object defines Menu_OpenCheatWarning() / Menu_CloseCheatWarning(confirm) for its own window layout.
+function Menu_CheatSaveItem(){
+	return Menu_Item("Save", Menu_TrySaveCheats);
+}
+function Menu_TrySaveCheats(){
+	if(!global.CheatsEnabled && Cheats_Enabled(false)) Menu_OpenCheatWarning();
+	else Menu_Save();
+}
+
+// Rows of the "Enable Cheats?" page; Back (or Cancel) returns to the cheat page with its changes still unsaved
+function Menu_CheatWarningRows(){
+	return [
+		Menu_BackItem("Cancel"),
+		Menu_Item("OK", function(){ Menu_CloseCheatWarning(true); })
+	];
+}
+
+// Wrapped warning text for pages that set a Message in their config
+function Menu_DrawMessage(_Msg, _X, _Y, _W, _Centered = false){
+	draw_set_font(global.Font_Small);
+	draw_set_halign(_Centered ? fa_center : fa_left);
+	draw_text_ext(_X, _Y, string_upper(_Msg), 9, _W);
+	draw_set_halign(fa_left);
+}
+
 #endregion
 
 
@@ -703,7 +733,7 @@ function GameMenu_Open(_Page, _Sound = Sound_TextDone){
 	FrameW = Menu_TileW[_Page] * 8;
 	FrameX = oCamera.X + ((CAM_W - FrameW) / 2);
 	FrameCentre = FrameX + (FrameW / 2);
-	audio_play_sound(_Sound, 1, false);
+	if(_Sound != noone) audio_play_sound(_Sound, 1, false);
 }
 
 /// @description Creates a menu row that opens another pause menu page and starts its edit session by taking a snapshot of the page's values.
@@ -762,6 +792,7 @@ function GameMenu_SaveCheats(){
 	User_Save();
 	Init_Gameplay_Cheats();
 	Inventory_Update();
+	global.CheatsEnabled = Cheats_Enabled(true);
 }
 
 #endregion

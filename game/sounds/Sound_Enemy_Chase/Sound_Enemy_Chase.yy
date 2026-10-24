@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":1.022875,
+  "duration":1.0229025,
   "exportDir":"",
   "name":"Sound_Enemy_Chase",
   "parent":{

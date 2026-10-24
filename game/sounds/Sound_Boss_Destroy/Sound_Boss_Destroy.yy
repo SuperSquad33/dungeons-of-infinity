@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":2.999274,
+  "duration":2.9992745,
   "exportDir":"",
   "name":"Sound_Boss_Destroy",
   "parent":{
