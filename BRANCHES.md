@@ -15,6 +15,6 @@
   * Likely unstable code
 
 * `stable/1.2.1`
-  * Source code given to the community by Justin Boheimer
+  * Source code given to the community by Justin Bohemier
   * Uses *GMS2* target
   * See [ReadMe](README.md#gamemaker-versions) for GameMaker IDE & Runtime versions
