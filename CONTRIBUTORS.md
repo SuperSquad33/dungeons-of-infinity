@@ -3,6 +3,6 @@
 | Contributor     | Contribution |
 |-----------------|--------------|
 | Justin Bohemier | Original Developer
-| @mysterypaintwo | Lead Community Edition Developer
-| @miketrethewey  | Community Edition Secretary
-| @Soaknfused     | In-Game Settings Menu
+| [@mysterypaintwo](http://github.com/mysterypaintwo)    | Lead Community Edition Developer
+| [Minnie A. Trethewey](http://github.com/miketrethewey) | Community Edition Secretary
+| [@Soaknfused](http://github.com/Soaknfused)            | In-Game Settings Menu
