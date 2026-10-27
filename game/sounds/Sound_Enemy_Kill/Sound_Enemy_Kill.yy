@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":0.515737,
+  "duration":0.51573694,
   "exportDir":"",
   "name":"Sound_Enemy_Kill",
   "parent":{

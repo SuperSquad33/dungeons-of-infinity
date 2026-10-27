@@ -23,6 +23,13 @@ if(_Title != ""){
 	draw_text(FrameCentre, FrameY + (_Config[$ "TitleY"] ?? 8), _Changed ? _Title + " (unsaved)" : _Title);
 }
 
+// Warning text
+var _Msg = _Config[$ "Message"];
+if(_Msg != undefined){
+	draw_set_color(#FFFFFF);
+	Menu_DrawMessage(_Msg, FrameCentre, FrameY + (_Config[$ "MessageY"] ?? 28), FrameW - 40, true);
+}
+
 var _LastRowY = FrameY;
 for(var i = 0; i < Menu_Count[_Page]; i++){
 

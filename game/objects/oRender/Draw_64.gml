@@ -413,3 +413,14 @@ if(DEBUG){
 
 
 }
+
+if (global.CheatsEnabled) {
+	draw_set_alpha(0.07);
+	draw_set_colour(c_black);
+	draw_rectangle(floor(CheatWatermarkX), floor(CheatWatermarkY), floor(CheatWatermarkX + CheatWatermarkSize), floor(CheatWatermarkY + CheatWatermarkSize), false);
+
+	// Restore the draw state
+	draw_set_alpha(1);
+	draw_set_colour(c_white);
+}
+

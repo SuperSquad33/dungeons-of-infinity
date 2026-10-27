@@ -8,6 +8,9 @@ var _DateMonth = date_get_month(_Date);
 
 global.Xmas = (_DateMonth == 12 && _DateDay == 25);
 
+// Whether the current run/main menu has cheats on.
+global.CheatsEnabled = false;
+
 LinkSprites_Load();
 
 ini_open("options.ini");

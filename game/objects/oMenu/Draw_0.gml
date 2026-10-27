@@ -45,6 +45,13 @@ if(MenuWinInst_Options.visible){
 			var _WinX = MenuWinInst_Options.x;
 			var _Changed = Menu_HasChanges(_Page);
 			if(_Changed) _OptionsTitle += " (unsaved)";
+
+			var _Msg = Menu_Config[_Page][$ "Message"];
+			if(_Msg != undefined){
+				Menu_DrawMessage(_Msg, _WinX + 16, MENU_TOP_Y, MenuWinInst_Options.W - 32);
+				draw_set_font(global.MenuFont);
+			}
+
 			for(var i = 0; i < Menu_Count[_Page]; i++){
 				if(!Menu_IsRowVisible(_Page, i)) continue;
 				var _Row = Menu[_Page][i];

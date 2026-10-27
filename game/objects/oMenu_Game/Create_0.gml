@@ -61,12 +61,12 @@ Menu_Create(GameMenuPage.Options, "Options", [
 // Populate the exact same list and groups as the title menu's Cheats page.
 // Save also applies newly enabled cheats to this play session.
 var _BackToCheats = function(_Sound){ GameMenu_Open(GameMenuPage.Cheats, _Sound); };
-var _CheatPage = array_concat([Menu_BackItem(), Menu_SaveItem()], Menu_CheatRows());
+var _CheatPage = array_concat([Menu_BackItem(), Menu_CheatSaveItem()], Menu_CheatRows());
 var _CheatGroups = Menu_CheatGroups();
 for(var i = 0; i < array_length(_CheatGroups); i++){
 	var _Group = _CheatGroups[i];
 	var _GroupPage = Menu_NewPageIndex();
-	Menu_Create(_GroupPage, _Group, array_concat([Menu_BackItem(), Menu_SaveItem()], Menu_CheatRows(_Group)), {
+	Menu_Create(_GroupPage, _Group, array_concat([Menu_BackItem(), Menu_CheatSaveItem()], Menu_CheatRows(_Group)), {
 		TileW: 26, Top: 28, TitleY: 8, YSpace: 19, VisibleRows: 5, OnBack: _BackToCheats, OnSave: GameMenu_SaveCheats
 	});
 	array_push(_CheatPage, GameMenu_Link((i == 0 ? "{s}" : "") + _Group, _GroupPage));
@@ -74,6 +74,22 @@ for(var i = 0; i < array_length(_CheatGroups); i++){
 Menu_Create(GameMenuPage.Cheats, "Cheats", _CheatPage, {
 	TileW: 26, Top: 28, TitleY: 8, YSpace: 19, VisibleRows: 5, OnSave: GameMenu_SaveCheats,
 	OnBack: function(_Sound){ GameMenu_Open(GameMenuPage.Options, _Sound); }
+});
+
+// "Enable Cheats?" confirmation. OK saves the cheat page it came from; Cancel/Back returns to it with the changes still unsaved.
+CheatWarning_ReturnPage = GameMenuPage.Cheats;
+Menu_OpenCheatWarning = function(){
+	CheatWarning_ReturnPage = Menu_ActiveIndex;
+	GameMenu_Open(GameMenuPage.CheatWarning, Sound_Boss_Hit);
+};
+Menu_CloseCheatWarning = function(_Confirm){
+	GameMenu_Open(CheatWarning_ReturnPage, _Confirm ? noone : Sound_Throw);
+	SelectorPos = 1;	// back on the Save row
+	if(_Confirm) Menu_Save();
+};
+Menu_Create(GameMenuPage.CheatWarning, "Enable Cheats?", Menu_CheatWarningRows(), {
+	TileW: 24, Top: 94, TitleY: 10, YSpace: 16, Centered: true, Message: CHEAT_WARNING_MSG, MessageY: 28,
+	OnBack: function(){ Menu_CloseCheatWarning(false); }
 });
 
 Menu_Create(GameMenuPage.Quit, "", [

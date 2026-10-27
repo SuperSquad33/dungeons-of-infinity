@@ -77,7 +77,10 @@ function LinkSprites_Load(){
 
 function LinkSprites_Construct(_CharacterIndex){
 
-	
+	// Draw_sprite_part uses the current draw alpha/color; We'll ensure that nothing left over gets baked into the sprites
+	draw_set_alpha(1);
+	draw_set_colour(c_white);
+
 	var SpriteSheet = global.LinkCharacterSpr[_CharacterIndex];
 
 	

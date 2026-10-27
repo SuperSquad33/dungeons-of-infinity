@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":0.451313,
+  "duration":0.45133787,
   "exportDir":"",
   "name":"Sound_FairyGet",
   "parent":{

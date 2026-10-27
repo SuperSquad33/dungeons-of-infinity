@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":0.426667,
+  "duration":0.42666668,
   "exportDir":"",
   "name":"Sound_Boss_Hit",
   "parent":{

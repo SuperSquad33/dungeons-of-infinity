@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":0.573968,
+  "duration":0.57396823,
   "exportDir":"",
   "name":"Sound_Error",
   "parent":{
